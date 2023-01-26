@@ -1,13 +1,3 @@
-[![Wordpress CI](https://github.com/garutilorenzo/k3s-oci-cluster/actions/workflows/ci.yml/badge.svg)](https://github.com/garutilorenzo/k3s-oci-cluster/actions/workflows/ci.yml)
-[![GitHub issues](https://img.shields.io/github/issues/garutilorenzo/k3s-oci-cluster)](https://github.com/garutilorenzo/k3s-oci-cluster/issues)
-![GitHub](https://img.shields.io/github/license/garutilorenzo/k3s-oci-cluster)
-[![GitHub forks](https://img.shields.io/github/forks/garutilorenzo/k3s-oci-cluster)](https://github.com/garutilorenzo/k3s-oci-cluster/network)
-[![GitHub stars](https://img.shields.io/github/stars/garutilorenzo/k3s-oci-cluster)](https://github.com/garutilorenzo/k3s-oci-cluster/stargazers)
-
-<p align="center">
-  <img src="https://garutilorenzo.github.io/images/k3s-logo-large.png?" alt="k3s Logo"/>
-</p>
-
 # OCI K3s cluster
 
 Deploy a Kubernetes cluster for free, using K3s and Oracle [always free](https://docs.oracle.com/en-us/iaas/Content/FreeTier/freetier_topic-Always_Free_Resources.htm) resources.
