@@ -1,4 +1,4 @@
-module "oci" {
+module "infra" {
   source                       = "./modules/oci/infra"
   region                       = var.region
   availability_domain          = var.availability_domain
@@ -18,8 +18,16 @@ module "oci" {
   #   certmanager_email_address = "<change_me>"
 }
 
-module compute {
-  source = "./modules/oci/compute"
+module "compute" {
+  source              = "./modules/oci/compute"
+  region              = var.region
+  tenancy_ocid        = var.tenancy_ocid
+  compartment_ocid    = var.compartment_ocid
+  my_public_ip_cidr   = var.my_public_ip_cidr
+  cluster_name        = var.cluster_name
+  availability_domain = var.availability_domain
+  environment         = var.environment
+  os_image_id         = var.os_image_id
 }
 
 # module "longhorn" {
@@ -66,11 +74,11 @@ module compute {
 # }
 
 output "oci_lb_ip" {
-  value = module.oci.public_lb_ip
+  value = module.infra.public_lb_ip
 }
 output "oci_master_ip" {
-  value = module.oci.k3s_servers_ips
+  value = module.compute.k3s_servers_ips
 }
 output "oci_worker_ip" {
-  value = module.oci.k3s_workers_ips
+  value = module.compute.k3s_workers_ips
 }
