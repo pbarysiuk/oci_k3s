@@ -26,7 +26,7 @@ data "cloudinit_config" "k3s_server_tpl" {
       k3s_url                           = oci_load_balancer_load_balancer.k3s_load_balancer.ip_address_details[0].ip_address,
       k3s_tls_san                       = oci_load_balancer_load_balancer.k3s_load_balancer.ip_address_details[0].ip_address,
       expose_kubeapi                    = var.expose_kubeapi,
-      k3s_tls_san_public                = local.public_lb_ip[0],
+      k3s_tls_san_public                = var.public_lb_ip[0],
       argocd_image_updater_release      = var.argocd_image_updater_release,
       install_argocd_image_updater      = var.install_argocd_image_updater,
       install_argocd                    = var.install_argocd,
@@ -61,27 +61,4 @@ data "cloudinit_config" "k3s_worker_tpl" {
       ingress_controller_https_nodeport = var.ingress_controller_https_nodeport,
     })
   }
-}
-
-data "oci_core_instance_pool_instances" "k3s_workers_instances" {
-  compartment_id   = var.compartment_ocid
-  instance_pool_id = oci_core_instance_pool.k3s_workers.id
-}
-
-data "oci_core_instance" "k3s_workers_instances_ips" {
-  count       = var.k3s_worker_pool_size
-  instance_id = data.oci_core_instance_pool_instances.k3s_workers_instances.instances[count.index].id
-}
-
-data "oci_core_instance_pool_instances" "k3s_servers_instances" {
-  depends_on = [
-    oci_core_instance_pool.k3s_servers,
-  ]
-  compartment_id   = var.compartment_ocid
-  instance_pool_id = oci_core_instance_pool.k3s_servers.id
-}
-
-data "oci_core_instance" "k3s_servers_instances_ips" {
-  count       = var.k3s_server_pool_size
-  instance_id = data.oci_core_instance_pool_instances.k3s_servers_instances.instances[count.index].id
 }

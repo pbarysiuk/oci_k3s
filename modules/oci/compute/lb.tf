@@ -1,3 +1,4 @@
+
 resource "oci_load_balancer_load_balancer" "k3s_load_balancer" {
   lifecycle {
     ignore_changes = [network_security_group_ids]
@@ -6,7 +7,7 @@ resource "oci_load_balancer_load_balancer" "k3s_load_balancer" {
   compartment_id = var.compartment_ocid
   display_name   = var.k3s_load_balancer_name
   shape          = var.public_lb_shape
-  subnet_ids     = [oci_core_subnet.oci_core_subnet11.id]
+  subnet_ids     = [var.oci_core_subnet11.id]
 
   freeform_tags = {
     "provisioner"           = "terraform"
@@ -48,7 +49,7 @@ resource "oci_load_balancer_backend" "k3s_kube_api_backend" {
 
   count            = var.k3s_server_pool_size
   backendset_name  = oci_load_balancer_backend_set.k3s_kube_api_backend_set.name
-  ip_address       = data.oci_core_instance.k3s_servers_instances_ips[count.index].private_ip
+  ip_address       = var.k3s_servers_instances_ips[count.index].private_ip
   load_balancer_id = oci_load_balancer_load_balancer.k3s_load_balancer.id
   port             = var.kube_api_port
 }

@@ -40,8 +40,8 @@ resource "oci_core_instance_configuration" "k3s_server_template" {
 
       create_vnic_details {
         assign_public_ip = true
-        subnet_id        = oci_core_subnet.default_oci_core_subnet10.id
-        nsg_ids          = [oci_core_network_security_group.lb_to_instances_kubeapi.id]
+        subnet_id        = var.oci_core_subnet10.id
+        nsg_ids          = [var.nsg_kubeapi.id]
       }
 
       display_name = "k3s server template"
@@ -106,8 +106,8 @@ resource "oci_core_instance_configuration" "k3s_worker_template" {
 
       create_vnic_details {
         assign_public_ip = true
-        subnet_id        = oci_core_subnet.default_oci_core_subnet10.id
-        nsg_ids          = [oci_core_network_security_group.lb_to_instances_http.id]
+        subnet_id        = var.oci_core_subnet10.id
+        nsg_ids          = [var.nsg_http.id]
       }
 
       display_name = "k3s worker template"

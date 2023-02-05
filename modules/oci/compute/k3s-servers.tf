@@ -1,8 +1,8 @@
 resource "oci_core_instance_pool" "k3s_servers" {
-  depends_on = [
-    oci_identity_dynamic_group.compute_dynamic_group,
-    oci_identity_policy.compute_dynamic_group_policy
-  ]
+  # depends_on = [
+  #   oci_identity_dynamic_group.compute_dynamic_group,
+  #   oci_identity_policy.compute_dynamic_group_policy
+  # ]
 
   lifecycle {
     create_before_destroy = true
@@ -15,7 +15,7 @@ resource "oci_core_instance_pool" "k3s_servers" {
 
   placement_configurations {
     availability_domain = var.availability_domain
-    primary_subnet_id   = oci_core_subnet.default_oci_core_subnet10.id
+    primary_subnet_id   = var.oci_core_subnet10.id
     fault_domains       = var.fault_domains
   }
 

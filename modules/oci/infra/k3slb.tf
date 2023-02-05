@@ -1,3 +1,26 @@
+data "oci_core_instance_pool_instances" "k3s_workers_instances" {
+  compartment_id   = var.compartment_ocid
+  instance_pool_id = var.oci_core_instance_pool_workers.id
+}
+
+data "oci_core_instance" "k3s_workers_instances_ips" {
+  count       = var.k3s_worker_pool_size
+  instance_id = data.oci_core_instance_pool_instances.k3s_workers_instances.instances[count.index].id
+}
+
+data "oci_core_instance_pool_instances" "k3s_servers_instances" {
+  depends_on = [
+    var.oci_core_instance_pool_servers,
+  ]
+  compartment_id   = var.compartment_ocid
+  instance_pool_id = var.oci_core_instance_pool_servers.id
+}
+
+data "oci_core_instance" "k3s_servers_instances_ips" {
+  count       = var.k3s_server_pool_size
+  instance_id = data.oci_core_instance_pool_instances.k3s_servers_instances.instances[count.index].id
+}
+
 resource "oci_network_load_balancer_network_load_balancer" "k3s_public_lb" {
   compartment_id             = var.compartment_ocid
   display_name               = var.public_load_balancer_name
@@ -37,7 +60,7 @@ resource "oci_network_load_balancer_backend_set" "k3s_http_backend_set" {
 
 resource "oci_network_load_balancer_backend" "k3s_http_backend" {
   depends_on = [
-    oci_core_instance_pool.k3s_workers,
+    var.oci_core_instance_pool_workers
   ]
 
   count                    = var.k3s_worker_pool_size
@@ -71,7 +94,7 @@ resource "oci_network_load_balancer_backend_set" "k3s_https_backend_set" {
 
 resource "oci_network_load_balancer_backend" "k3s_https_backend" {
   depends_on = [
-    oci_core_instance_pool.k3s_workers,
+    var.oci_core_instance_pool_workers
   ]
 
   count                    = var.k3s_worker_pool_size
@@ -109,7 +132,7 @@ resource "oci_network_load_balancer_backend_set" "k3s_kubeapi_backend_set" {
 
 resource "oci_network_load_balancer_backend" "k3s_kubeapi_backend" {
   depends_on = [
-    oci_core_instance_pool.k3s_servers,
+    var.oci_core_instance_pool_servers
   ]
 
   count                    = var.expose_kubeapi ? var.k3s_server_pool_size : 0

@@ -228,3 +228,31 @@ variable "expose_kubeapi" {
   type    = bool
   default = false
 }
+
+variable "oci_core_subnet10" {
+  type = any
+}
+
+variable "oci_core_subnet11" {
+  type = any
+}
+
+variable "public_lb_ip" {
+  type = any
+}
+
+variable "nsg_kubeapi" {
+  type = any
+}
+
+variable "nsg_http" {
+  type = any
+}
+
+variable "compute_dynamic_group" {
+  type = any
+}
+
+variable "k3s_servers_instances_ips" {
+  type = any
+}

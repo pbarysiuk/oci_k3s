@@ -37,14 +37,14 @@ module "k3s_cluster" {
   source                    = "../"
 }
 
-output "k3s_servers_ips" {
-  value = module.k3s_cluster.k3s_servers_ips
-}
+# output "k3s_servers_ips" {
+#   value = module.k3s_cluster.k3s_servers_ips
+# }
 
-output "k3s_workers_ips" {
-  value = module.k3s_cluster.k3s_workers_ips
-}
+# output "k3s_workers_ips" {
+#   value = module.k3s_cluster.k3s_workers_ips
+# }
 
-output "public_lb_ip" {
-  value = module.k3s_cluster.public_lb_ip
-}
+# output "public_lb_ip" {
+#   value = module.k3s_cluster.public_lb_ip
+# }

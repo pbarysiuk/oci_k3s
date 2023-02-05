@@ -228,3 +228,11 @@ variable "expose_kubeapi" {
   type    = bool
   default = false
 }
+
+variable "oci_core_instance_pool_workers" {
+  type = any
+}
+
+variable "oci_core_instance_pool_servers" {
+  type = any
+}

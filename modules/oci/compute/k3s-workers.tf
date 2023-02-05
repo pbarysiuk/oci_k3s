@@ -15,7 +15,7 @@ resource "oci_core_instance_pool" "k3s_workers" {
 
   placement_configurations {
     availability_domain = var.availability_domain
-    primary_subnet_id   = oci_core_subnet.default_oci_core_subnet10.id
+    primary_subnet_id   = var.oci_core_subnet10.id
     fault_domains       = var.fault_domains
   }
 
