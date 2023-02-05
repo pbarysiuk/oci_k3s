@@ -47,7 +47,7 @@ variable "fault_domains" {
 
 variable "PATH_TO_PUBLIC_KEY" {
   type        = string
-  default     = "~/.ssh/id_rsa.pub"
+  default     = "./id_rsa.pub"
   description = "Path to your public key"
 }
 
