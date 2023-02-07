@@ -2,6 +2,7 @@
 resource "oci_load_balancer_load_balancer" "k3s_load_balancer" {
   lifecycle {
     ignore_changes = [network_security_group_ids]
+    create_before_destroy = false
   }
 
   compartment_id = var.compartment_ocid
@@ -46,6 +47,9 @@ resource "oci_load_balancer_backend" "k3s_kube_api_backend" {
   depends_on = [
     oci_core_instance_pool.k3s_servers,
   ]
+  lifecycle {
+    create_before_destroy = false
+  }
 
   count            = var.k3s_server_pool_size
   backendset_name  = oci_load_balancer_backend_set.k3s_kube_api_backend_set.name
